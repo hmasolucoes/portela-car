@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portela Car</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Work+Sans:wght@400;600&display=swap">
+<style>
+/* Layout: one centred column of stacked link blocks, like a dashboard panel */
+:root {
+  --bg: #F1F1EF;
+  --fg: #111214;
+  --muted: #62666C;
+  --card: #FFFFFF;
+  --line: #D8D9DB;
+  --accent: #D71920;
+  --on-accent: #FFFFFF;
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Work Sans", ui-sans-serif, system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B0B0C;
+    --fg: #E9EAEC;
+    --muted: #8E9196;
+    --card: #161719;
+    --line: #2A2C30;
+    --accent: #E8262C;
+    --on-accent: #15171A;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B0B0C;
+  --fg: #E9EAEC;
+  --muted: #8E9196;
+  --card: #161719;
+  --line: #2A2C30;
+  --accent: #E8262C;
+  --on-accent: #15171A;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px;
+}
+
+.wrap {
+  max-width: 420px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.logo {
+  width: 160px;
+  height: 160px;
+  max-width: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 6px var(--bg), 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-wrap: balance;
+}
+
+.tagline {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  max-width: 30ch;
+  text-wrap: balance;
+}
+
+.links {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 16px 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--fg);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.link span:first-child {
+  overflow-wrap: anywhere;
+}
+
+.link .arrow {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.link:hover { border-color: var(--accent); }
+
+.link.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+.link.primary .arrow { color: var(--on-accent); }
+
+.card {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+.card:hover { border-color: var(--accent); }
+
+.card-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  font-weight: 600;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.svc { width: 100%; min-width: 0; }
+
+.svc > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.svc > summary::-webkit-details-marker { display: none; }
+.svc > summary .arrow { transition: transform 0.2s ease; }
+.svc[open] > summary { border-color: var(--accent); }
+.svc[open] > summary .arrow { transform: rotate(90deg); }
+
+.svc-panel {
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.svc-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  text-wrap: balance;
+}
+
+.svc-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.svc-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+
+.svc-list li:last-child { border-bottom: 0; }
+
+.link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.pix {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pix-label {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.pix-key {
+  margin: 0;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+
+.pix-holder {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.pix button {
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.pix button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.pix-status {
+  margin: 0;
+  min-height: 1.5em;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.hma {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  margin-top: 12px;
+  padding: 20px 18px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.hma-hook {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hma-btn {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 6px;
+  background: var(--fg);
+  color: var(--bg);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hma-btn:hover { background: var(--accent); color: var(--on-accent); }
+
+.hma-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.hma-contact {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.foot {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wrap > * { animation: none; }
+}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="hero">
+    <img class="logo" src="logo.jpg" alt="Logotipo Portela Car" width="160" height="160">
+    <h1>Portela Car</h1>
+    <p class="tagline">Estética automotiva</p>
+  </header>
+
+  <nav class="links" aria-label="Links da Portela Car">
+    <a class="link primary" href="https://wa.me/+5577998021355" target="_blank" rel="noopener">
+      <span>Agendar pelo WhatsApp</span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <a class="link" href="#">
+      <span>Instagram</span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    <details class="svc">
+      <summary class="link">
+        <span>Ver todos os serviços</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </summary>
+      <div class="svc-panel">
+        <h2 class="svc-title">Tipos de serviços que fazemos nas concessionárias</h2>
+        <ul class="svc-list">
+          <li>Higienização</li>
+          <li>Polimento</li>
+          <li>Películas estética, Windows Blue...</li>
+          <li>Martelinho de ouro</li>
+          <li>Micro pintura</li>
+          <li>Acessórios em geral</li>
+          <li>Banco de couro, banco ecológico, tapete, assoalho</li>
+          <li>Estética automotiva em geral</li>
+          <li>Envelopamento</li>
+          <li>Vitrificação</li>
+          <li>Futuramente funilaria express</li>
+        </ul>
+        <a class="link primary" href="https://wa.me/+5577998021355?text=Ol%C3%A1%2C%20gostaria%20de%20solicitar%20um%20or%C3%A7amento!" target="_blank" rel="noopener">
+          <span>Pedir orçamento</span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </details>
+    <a class="card" href="https://maps.app.goo.gl/SAdDBT9NCfCH5CXQA" target="_blank" rel="noopener">
+      <img class="card-photo" src="fachada.jpg" alt="Fachada da Portela Car" width="798" height="679">
+      <span class="card-body">
+        <span>Como chegar</span>
+        <span class="arrow" aria-hidden="true">→</span>
+      </span>
+    </a>
+  </nav>
+
+  <section class="pix" aria-labelledby="pix-label">
+    <p class="pix-label" id="pix-label">Chave Pix</p>
+    <p class="pix-key" id="pix-key">portelacessorios@gmail.com</p>
+    <p class="pix-holder">Alex dos Santos Portela</p>
+    <button type="button" id="pix-copy">Copiar chave Pix</button>
+    <p class="pix-status" id="pix-status" role="status" aria-live="polite"></p>
+  </section>
+  <address class="foot" style="font-style: normal; text-align: center; line-height: 1.6;">
+    Rua Ruy Barbosa, 650 - Vila Regina<br>
+    Barreiras - BA, 47806-136
+  </address>
+
+  <p class="foot">© Portela Car</p>
+
+  <footer class="hma">
+    <p class="hma-hook">Quer a sua página de links?</p>
+    <a class="hma-btn" href="https://wa.me/+5577999735965" target="_blank" rel="noopener">Quero minha página de links</a>
+    <p class="hma-contact">
+      HMA Soluções Digitais<br>
+      WhatsApp 77 99973-5965<br>
+      Instagram @digital.hma<br>
+      hmasolucoesdigitais@gmail.com
+    </p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var btn = document.getElementById('pix-copy');
+  var key = document.getElementById('pix-key');
+  var status = document.getElementById('pix-status');
+  function selectKey() {
+    var range = document.createRange();
+    range.selectNodeContents(key);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  btn.addEventListener('click', function () {
+    var text = key.textContent.trim();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        status.textContent = 'Chave copiada!';
+      }).catch(function () {
+        selectKey();
+        status.textContent = 'Não foi possível copiar. A chave está selecionada, copie manualmente.';
+      });
+    } else {
+      selectKey();
+      status.textContent = 'A chave está selecionada, copie manualmente.';
+    }
+  });
+})();
+</script>
+</body>
+</html>
