@@ -493,5 +493,6 @@ body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
   });
 })();
 </script>
+<script>(function(){var ac;document.addEventListener('pointerdown',function(ev){if(!ev.target.closest('a,button,summary'))return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain(),t=ac.currentTime;o.type='triangle';o.frequency.setValueAtTime(2400,t);g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.001,t+.02);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+.025)}catch(x){}});})();</script>
 </body>
 </html>
